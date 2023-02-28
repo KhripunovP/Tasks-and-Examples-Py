@@ -17,7 +17,7 @@ while True:
     user_choice = print_menu()
     if user_choice == 1:
         print('Открыть файл')
-        phone_guide = config1.open_phone_book()
+        config1.open_phone_book()
     elif user_choice == 2:
         print('Сохранить файл')
         config1.save_phone_book()
@@ -37,7 +37,9 @@ while True:
         print('Удалить контакт')
         config1.delete_contact()
     elif user_choice == 8:
-        print('Выход')
-        config1.quit()
+        if config1.quit():
+            if True:
+                config1.save_phone_book()
+        print('До свидания!')
         break
 

@@ -1,18 +1,30 @@
 import re
+from copy import deepcopy
+
 phone_guide = []
+path = 'Phone_book.txt'
+new_phone_guide = []
 
 def open_phone_book():
-    with open('Phone_book.txt', 'r', encoding = 'utf-8') as data:
-        phone_guide = data.readlines()
+    global phone_guide
+    global new_phone_guide
+    global path
+    with open(path, 'r', encoding = 'utf-8') as file:
+        data = file.readlines()
+        for contact in data:
+            phone_guide.append(contact)
         print('Файл открыт')
-        return phone_guide
+    new_phone_guide = deepcopy(phone_guide)
 
 def save_phone_book():
-    with open('Phone_book.txt', 'w', encoding = 'utf-8') as data:
+    global phone_guide
+    global path
+    with open(path, 'w', encoding = 'utf-8') as file:
         for i in phone_guide:
-            data.write(i)
+            file.write(i)
 
 def show_contacts():
+    global phone_guide
     if(len(phone_guide)) == 0:
         print('Файл не открыт либо пуст')
     else:
@@ -20,6 +32,7 @@ def show_contacts():
             print(' '.join(i.split(';')))
 
 def add_contact():
+    global phone_guide
     if(len(phone_guide)) == 0:
         print('Файл не открыт либо пуст')
     else:
@@ -28,6 +41,7 @@ def add_contact():
         phone_guide.append('\n' + user_info)
 
 def change_contact():
+    global phone_guide
     if(len(phone_guide)) == 0:
         print('Файл не открыт либо пуст')
     else:
@@ -43,6 +57,7 @@ def change_contact():
                 print('Такого контакта нет')
 
 def find_contact():
+    global phone_guide
     if(len(phone_guide)) == 0:
         print('Файл не открыт либо пуст')
     else:
@@ -56,6 +71,7 @@ def find_contact():
                 print('Такого контакта нет')
 
 def delete_contact():
+    global phone_guide
     if (len(phone_guide)) == 0:
         print('Файл не открыт либо пуст')
     else:
@@ -74,7 +90,12 @@ def delete_contact():
                 print('Такого контакта нет')
 
 def quit():
-    with open('Phone_book.txt', 'r', encoding = 'utf-8') as data:
-        data.close()
+    global phone_guide
+    global new_phone_guide
+    print(phone_guide)
+    print(new_phone_guide)
 
-phone_guide = open_phone_book()
+    if phone_guide != new_phone_guide:
+        answer = input('У вас есть несохраненные изменения, хотите их сохранить? (y/n)')
+        return True if answer == 'y' else False
+
