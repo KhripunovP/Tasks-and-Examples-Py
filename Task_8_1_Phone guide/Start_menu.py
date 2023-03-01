@@ -1,45 +1,52 @@
-import config1
+from config1 import PhoneBook
+
+pb = PhoneBook('Phone_book.txt')
 
 def print_menu():
-    print('Это телефонный справочник. Выберите действие, которое нужно совершить:\n'
-          '1. Открыть файл\n'
-          '2. Сохранить файл\n'
-          '3. Показать контакты\n'
-          '4. Добавить контакт\n'
-          '5. Изменить контакт\n'
-          '6. Найти контакт\n'
-          '7. Удалить контакт\n'
-          '8. Выход')
-    data = int(input('Введите номер необходимого действия: '))
-    return data
+    print('''\nЭто телефонный справочник. Возможные действия:
+          1. Открыть файл
+          2. Сохранить файл
+          3. Показать контакт
+          4. Добавить контакт
+          5. Изменить контакт
+          6. Найти контакт
+          7. Удалить контакт
+          8. Выход''')
+    while True:
+        choice = input('Введите номер необходимого действия: ')
+        if choice.isdigit() and 0 < int(choice) < 9:
+            return int(choice)
+        else:
+            print('Номер действия должен быть от 1 до 8 включительно. "Давай по новой, Миша.. (с)"')
 
 while True:
     user_choice = print_menu()
-    if user_choice == 1:
-        print('Открыть файл')
-        config1.open_phone_book()
-    elif user_choice == 2:
-        print('Сохранить файл')
-        config1.save_phone_book()
-    elif user_choice == 3:
-        print('Показать контакты')
-        config1.show_contacts()
-    elif user_choice == 4:
-        print('Добавить контакт')
-        config1.add_contact()
-    elif user_choice == 5:
-        print('Изменить контакт')
-        config1.change_contact()
-    elif user_choice == 6:
-        print('Найти контакт')
-        config1.find_contact()
-    elif user_choice == 7:
-        print('Удалить контакт')
-        config1.delete_contact()
-    elif user_choice == 8:
-        if config1.quit():
-            if True:
-                config1.save_phone_book()
-        print('До свидания!')
-        break
+    match user_choice:
+        case 1:
+            print('Открыть файл')
+            pb.open_file()
+        case 2:
+            print('Сохранить файл')
+            pb.save_phone_book()
+        case 3:
+            print('Показать контакты')
+            pb.show_contacts()
+        case 4:
+            print('Добавить контакт')
+            pb.add_contact()
+        case 5:
+            print('Изменить контакт')
+            pb.change_contact()
+        case 6:
+            print('Найти контакт')
+            pb.find_contact()
+        case 7:
+            print('Удалить контакт')
+            pb.delete_contact()
+        case 8:
+            if pb.quit():
+                if True:
+                    pb.save_phone_book()
+            print('До свидания!')
+            break
 
